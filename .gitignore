@@ -1,0 +1,14 @@
+**/dist
+**/build
+**/tmp
+**/node_modules
+
+# Visual Studio Code
+**/.vscode/*
+
+# Angular
+**/.angular
+
+# System files
+.DS_Store
+Thumbs.db
