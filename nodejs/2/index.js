@@ -4,21 +4,22 @@ import got from 'got';
 async function getTotalVehicles() {
   return got.get('https://api.artic.edu/api/v1/artworks/search');
 }
-  
-function getPlurial() {
+
+// CHECKME: the problem was that we are returning something without solving the promise
+// As 'many' is the default value, we think there are many, when it is not true, total is undefined
+// Yet, I still encouraging to use async / await syntax and not callbacks
+async function getPlurial() {
   let total;
-  // CHECKME: no big problem, but encourage to use async / await syntax and not callbacks
-  getTotalVehicles().then(r => { 
-    const body = JSON.parse(r.body);
-    total = body.pagination.total;
-  });
+  const result = await getTotalVehicles();
+  const body = JSON.parse(result.body);
+  total = body.pagination.total;
   if (total <= 0) {
       return 'none';
   }
   if (total <= 10) {
       return 'few';
   }
-  return 'many';
+  return total;
 }
 
-console.log(getPlurial());
+console.log(await getPlurial());
